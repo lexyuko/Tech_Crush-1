@@ -1,27 +1,36 @@
 services:
   mongo:
-    image: mongo:7
+    image: mongodb/mongodb-community-server
     container_name: mongo
     ports:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
 
-  backend:
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  group-1-backend:
     build: ./Backend
+    env_file:
+      - ./Backend/.env
     ports:
       - "5000:5000"
     environment:
-      - MONGO_URI=mongodb://mongo:27017/techcrush
+      - MONGODB_URI=mongodb://mongo:27017/techcrush
     depends_on:
       - mongo
+   
 
   frontend:
     build: ./frontend
     ports:
       - "8080:80"
     depends_on:
-      - backend
+      - group-1-backend
 
 volumes:
   mongo-data:

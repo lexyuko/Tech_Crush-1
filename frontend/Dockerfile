@@ -15,7 +15,7 @@ COPY . .
 RUN npm run build
 
 # Runtime Stage 
-FROM nginx:alpine AS runtime
+FROM nginx:stable-alpine AS runtime
 
 # Use our nginx config includes /api proxy
 COPY nginx.conf /etc/nginx/conf.d/default.conf
