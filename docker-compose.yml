@@ -15,18 +15,19 @@ services:
 
   group-1-backend:
     build: ./Backend
-    env_file:
-      - ./Backend/.env
+    #env_file:
+     # - ./Backend/.env
     ports:
       - "5000:5000"
     environment:
       - MONGODB_URI=mongodb://mongo:27017/techcrush
+      - JWT_SECRET=group1-techcrush.
     depends_on:
       - mongo
    
 
   frontend:
-    build: ./frontend
+    image: francesehinor/tech-crush-group-1-frontend:v1
     ports:
       - "8080:80"
     depends_on:

@@ -20,11 +20,10 @@ document.addEventListener("DOMContentLoaded", () => {
       if (msg) msg.textContent = "";
 
       const email = loginForm.querySelector("input[name=email]")?.value?.trim();
-      const userName = loginForm.querySelector("input[name=userName]")?.value?.trim();
       const password = loginForm.querySelector("input[name=password]")?.value;
 
-      if (!email || !userName || !password) {
-        if (msg) msg.textContent = "Email, userName and password required.";
+      if (!email || !password) {
+        if (msg) msg.textContent = "Email and password required.";
         return;
       }
 
@@ -32,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const res = await fetch(`${API_BASE}/auth/login`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, userName, password }),
+          body: JSON.stringify({ email, password }),
         });
 
         let data = {};
