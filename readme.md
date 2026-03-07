@@ -17,7 +17,7 @@ use npm run dev to run locally
 
 ----
 
-#### Frontend
+## Frontend
 
 The frontend provides the user interface for the authentication system, including the homepage, signup page, and login page. It communicates with the backend API to handle user authentication.
 
