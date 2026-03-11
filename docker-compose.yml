@@ -14,9 +14,7 @@ services:
       retries: 5
 
   group-1-backend:
-    build: ./Backend
-    #env_file:
-     # - ./Backend/.env
+    image: lexyuko/tech-crush-group-1-backend:v1
     ports:
       - "5000:5000"
     environment:

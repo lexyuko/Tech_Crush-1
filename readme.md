@@ -1,18 +1,32 @@
-how to use
+## Backend
+The backend is a basic REST api built using expressjs(nodejs) and typescript
+it provides the logic that allows the frontend communicate with the database
 
-base url == /api/auth
+## how to use
+base url == /api/auth 
 
-endpoints\
+## endpoints\
 
-/api/auth/signup
+/api/auth/signup ==> Signup route 
 
-/api/auth/login
+/api/auth/login ==> Login route
 
-/api/auth/logout
+/api/auth/logout  ==> Logout route
 
-use npm run dev to run locally
+## How to Run
 
-!note make sure you have a mongodb container running
+The backend is containerized and hosted on Docker Hub: lexyuko/tech-crush-group-1-backend:v1
+the mongodb container in use mongodb/mongodb-community-server
+
+navigate to the root folder and run the docker compose file
+docker compose up 
+
+# technologies used 
+1. nodejs
+2. typescript
+3. expressjs (router)
+4. mongodb (database)
+
 
 
 ----

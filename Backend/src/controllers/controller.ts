@@ -10,22 +10,21 @@ export const signup = async (req: Request, res: Response) => {
         if (!email || !password || !userName) {
           res.status(400).json({ success: false, message: "All fields required" });
     }
-    const userAlreadyExists = await User.findOne({email}); // Replace with actual check
+    const userAlreadyExists = await User.findOne({email}); 
     if (userAlreadyExists) {
     return res.status(400).json({success: false, message: "User already exists" });
 }
-const hashedPassword = await bcrypt.hash(password, 10); // Replace with actual hashing
-const verificationToken = Math.floor(100000 + Math.random() * 900000).toString() // Replace with actual token generation logic
+const hashedPassword = await bcrypt.hash(password, 10); 
+const verificationToken = Math.floor(100000 + Math.random() * 900000).toString() 
 const user = new User({
     email: email,
     password: hashedPassword,
     userName: userName,
     verificationTokenExpiresAt: Date.now()  +24 * 60 * 60 * 1000, // Token expires in 24 hours
 })
-await user.save(); // Replace with actual save logic
+await user.save(); 
 //jwt
-generateTokenAndSetCookie(res, user.id);// Replace with actual token generation and cookie setting logic
-
+generateTokenAndSetCookie(res, user.id);
 res.status(201).json({
     success: true,
      message: "user registered successfully",
@@ -44,11 +43,11 @@ export const login = async (req: Request, res: Response) => {
     const { email, password } = req.body;
     //login logic
     try{
-         const user = await User.findOne({ email }); // Replace with actual user lookup logic
+         const user = await User.findOne({ email }); 
     if (!user) {
         return res.status(400).json({ success: false, message: "Invalid email or password" });
     }
-const isPasswordValid = await bcrypt.compare(password, user.password); // Replace with actual password comparison logic
+const isPasswordValid = await bcrypt.compare(password, user.password); 
  if(!isPasswordValid){
     return res.status(400).json({ success: false, message: "Invalid email or password" });
  }
