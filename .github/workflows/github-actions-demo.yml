@@ -43,13 +43,13 @@ jobs:
    #---
    # Step 5: Build & Push Backend Image
    #---
-   - name: Build & Push Backend Image
-     uses: docker/build-push-action@v5
-     with: 
-       context: ./Backend
-       push: true
-       tags: lexyuko/tech-crush-group-1-backend:latest
-            lexyuko/tech-crush-group-1-backend:${{ github.sha }}
+   #- name: Build & Push Backend Image
+    #  uses: docker/build-push-action@v5
+    #  with: 
+    #    context: ./Backend
+    #    push: true
+    #    tags: lexyuko/tech-crush-group-1-backend:latest
+    #         lexyuko/tech-crush-group-1-backend:${{ github.sha }}
 
    #---
    # Step 6: Build & Push Frontend Image
