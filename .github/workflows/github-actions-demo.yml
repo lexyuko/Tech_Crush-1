@@ -92,8 +92,10 @@ jobs:
      with:
       context: ./frontend 
       push: true
-      tags: monclero/techcrush-frontend:latest
-
+      tags: | 
+        monclero/techcrush-frontend:latest
+        monclero/techcrush-frontend:${{ github.sha }}
+        
    #---
    # Step 7: Echo Images Pushed 
    #---
