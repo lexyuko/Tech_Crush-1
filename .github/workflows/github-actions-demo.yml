@@ -1,0 +1,91 @@
+name: CI/CD Pipeline - Build, Push, Deploy
+
+on:
+ push:
+  branches:
+   - MONCLERO # Run file only when pushed to main
+
+jobs:
+ build-and-deploy:
+  runs-on: ubuntu-latest
+
+  steps:
+   #---
+   # Step 1: Checkout code
+   #---
+   - name: Checkout repo
+     uses: actions/checkout@v4
+
+   #---
+   # Step 2: Set up Docker Buildx
+   #---
+   - name: Set up Docker Buildx
+     uses: docker/setup-buildx-action@v4
+
+   #---
+   # Step 3: Log in to Docker Hub [Backend]
+   #---
+  #  #- name: Log in to lexyuko Docker Hub
+  #    uses: docker/login-action@v4
+  #    with:
+  #     username: ${{ secrets.DOCKER_USERNAME_BACKEND }}
+  #     password: ${{ secrets.DOCKER_PASSWORD_BACKEND }}
+    
+   #---
+   # Step 4: Log in to Docker Hub [Frontend]
+   #---
+   - name: Log in to francesehinor Docker Hub
+     uses: docker/login-action@v4
+     with:
+      username: ${{ secrets.DOCKER_USERNAME_FRONTEND }}
+      password: ${{ secrets.DOCKER_PASSWORD_FRONTEND }}
+
+   #---
+   # Step 5: Build & Push Backend Image
+   #---
+   #- name: Build & Push Backend Image
+    #  uses: docker/build-push-action@v5
+    #  with: 
+    #    context: ./Backend
+    #    push: true
+    #    tags: lexyuko/tech-crush-group-1-backend:latest
+    #         lexyuko/tech-crush-group-1-backend:${{ github.sha }}
+
+   #---
+   # Step 6: Build & Push Frontend Image
+   #---
+   - name: Build & Push Frontend Image
+     uses: docker/build-push-action@v5
+     with: 
+       context: ./frontend 
+       push: true
+       tags: francesehinor/tech-crush-group-1-frontend:latest
+            francesehinor/tech-crush-group-1-frontend:${{ github.sha }}
+    
+   #---
+   # Step 7: Echo Images Pushed 
+   #---
+   - name: Summary
+     run: |
+        echo "### Docker Images Pushed" >> $GITHUB_STEP_SUMMARY
+        echo "- \`lexyuko/tech-crush-group-1-backend:${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+        echo "- \`francesehinor/tech-crush-group-1-frontend:${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+   
+   #---
+   # Step 8: Deploy on Azure VM via SSH
+   #---
+   - name: Deploy on Azure VM
+     uses: D3rHase/ssh-command-action@latest
+     with:
+       host: ${{ secrets.VM_HOST }}
+       username: ${{ secrets.VM_USER }}
+       key: ${{ secrets.VM_SSH_KEY }}
+       script: |
+            cd ~/docker-project || git clone "git clone link" docker-project
+            cd docker-project
+            git pull origin main
+            cd ~/
+            sudo docker compose down
+            sudo docker pull "backend link"
+            sudo docker pull "frontend link"
+            sudo docker compose up -d --build  
