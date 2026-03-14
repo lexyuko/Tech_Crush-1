@@ -20,25 +20,25 @@ jobs:
    # Step 2: Set up Docker Buildx
    #---
    - name: Set up Docker Buildx
-     uses: docker/setup-buildx-action@v3
+     uses: docker/setup-buildx-action@v4
 
    #---
    # Step 3: Log in to Docker Hub [Backend]
    #---
    - name: Log in to lexyuko Docker Hub
-     uses: docker/login-action@v3
+     uses: docker/login-action@v4
      with:
-      username: ${{ secrets.DOCKERHUB USERNAME }}
-      password: ${{ secrets.DOCKERHUB TOKEN }}
+      username: ${{ secrets.DOCKER_USERNAME_BACKEND }}
+      password: ${{ secrets.DOCKER_PASSWORD_BACKEND }}
     
    #---
    # Step 4: Log in to Docker Hub [Frontend]
    #---
    - name: Log in to francesehinor Docker Hub
-     uses: docker/login-action@v3
+     uses: docker/login-action@v4
      with:
-      username: ${{ secrets.DOCKERHUB USERNAME }}
-      password: ${{ secrets.DOCKERHUB TOKEN }}
+      username: ${{ secrets.DOCKER_USERNAME_FRONTEND }}
+      password: ${{ secrets.DOCKER_PASSWORD_FRONTEND }}
 
    #---
    # Step 5: Build & Push Backend Image
@@ -67,25 +67,25 @@ jobs:
    #---
    - name: Summary
      run: |
-          echo "### ✅ Docker Images Pushed" >> $GITHUB_STEP_SUMMARY
-          echo "- \`lexyuko/tech-crush-group-1-backend:${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
-          echo "- \`francesehinor/tech-crush-group-1-frontend:${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+        echo "### Docker Images Pushed" >> $GITHUB_STEP_SUMMARY
+        echo "- \`lexyuko/tech-crush-group-1-backend:${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+        echo "- \`francesehinor/tech-crush-group-1-frontend:${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
    
    #---
    # Step 8: Deploy on Azure VM via SSH
    #---
    - name: Deploy on Azure VM
-     uses: #ssh link for Deploying AZ VM
+     uses: D3rHase/ssh-command-action@latest
      with:
-       host: ${{ secrets.VM HOST }}
-       username: ${{ secrets.VM USER }}
-       key: ${{ secrets.VM SSH KEY }}
+       host: ${{ secrets.VM_HOST }}
+       username: ${{ secrets.VM_USER }}
+       key: ${{ secrets.VM_SSH_KEY }}
        script: |
-         # cd ~/docker-project || git clone "git clone link" docker-project
-         # cd docker-project
-         # git pull origin main
-         cd ~/
-         sudo docker compose down
-         sudo docker pull "backend link"
-         sudo docker pull "frontend link"
-         sudo docker compose up -d --build  
+            cd ~/docker-project || git clone "git clone link" docker-project
+            cd docker-project
+            git pull origin main
+            cd ~/
+            sudo docker compose down
+            sudo docker pull "backend link"
+            sudo docker pull "frontend link"
+            sudo docker compose up -d --build  

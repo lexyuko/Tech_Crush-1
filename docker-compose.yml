@@ -6,7 +6,6 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
-
     healthcheck:
       test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
       interval: 10s
@@ -17,6 +16,8 @@ services:
     image: lexyuko/tech-crush-group-1-backend:v1
     ports:
       - "5000:5000"
+    secrets:
+      - JWT_SECRET
     environment:
       - MONGODB_URI=mongodb://mongo:27017/techcrush
       - JWT_SECRET=group1-techcrush.
@@ -33,3 +34,7 @@ services:
 
 volumes:
   mongo-data:
+
+secrets:
+  JWT_SECRET:
+    file: ./backendpassword.text
