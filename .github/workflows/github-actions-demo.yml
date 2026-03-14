@@ -3,7 +3,7 @@ name: CI/CD Pipeline - Build, Push, Deploy
 on:
  push:
   branches:
-   -main # Run file only when pushed to main
+   -MONCLERO # Run file only when pushed to main
 
 jobs:
  build-and-deploy:
