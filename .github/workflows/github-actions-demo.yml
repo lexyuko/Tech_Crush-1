@@ -67,8 +67,8 @@ jobs:
       user: ${{ secrets.VM_USER }}
       private_key: ${{ secrets.VM_SSH_KEY }}
       command: |
-        mkdir -p tech_crush_1 && cd tech_crush_1 && git init && echo "Current directory: "
-        && git clone https://github.com/lexyuko/Tech_Crush-1.git && git branch -m main && git pull origin main
+        mkdir -p ~/tech_crush_1 && cd ~/tech_crush_1 && echo "Current directory: "
+        && git clone -b MONCLERO https://github.com/lexyuko/Tech_Crush-1.git && git pull origin MONCLERO
         && sudo docker compose pull && sudo docker compose up -d
         
    - name: Notify Command Success
