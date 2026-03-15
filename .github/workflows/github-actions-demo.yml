@@ -31,7 +31,7 @@ jobs:
    - name: Build and Push Frontend
      uses: docker/build-push-action@v4
      with:
-      context: ./Frontend
+      context: ./frontend
       push: true
       tags: | 
          monclero/techcrush-frontend:v1
