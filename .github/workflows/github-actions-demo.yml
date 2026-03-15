@@ -69,7 +69,7 @@ jobs:
        command: |
           # Clone repo if it does not exist
           if [ ! -d ~/tech-crush-1/.git ]; then
-            git clone git@github.com:lexyuko/Tech_Crush-1.git ~/tech-crush-1
+            git clone https://github.com/lexyuko/Tech_Crush-1.git ~/tech-crush-1
           fi
 
           # Pull latest
