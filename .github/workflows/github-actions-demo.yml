@@ -66,13 +66,4 @@ jobs:
        host: ${{ secrets.VM_HOST }}
        user: ${{ secrets.VM_USER }}
        private_key: ${{ secrets.VM_SSH_KEY }}
-       command: |
-          if [ ! -d ~/docker-project/.git ]; then
-            git clone git@github.com:lexyuko/Tech_Crush-1.git ~/docker-project
-          fi
-
-          cd ~/docker-project
-          git pull MONCLERO
-          sudo docker compose pull
-          sudo docker compose up -d
-        
+       command:
