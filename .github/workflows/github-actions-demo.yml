@@ -67,16 +67,14 @@ jobs:
        user: ${{ secrets.VM_USER }}
        private_key: ${{ secrets.VM_SSH_KEY }}
        command: |
-          # Clone repo if it does not exist
-          if [ ! -d ~/tech-crush-1/.git ]; then
-            git clone https://github.com/lexyuko/Tech_Crush-1.git ~/tech-crush-1
-          fi
+        # Clone repo if it does not exist
+           git clone https://github.com/lexyuko/Tech_Crush-1.git ~/tech-crush-1
 
-          # Pull latest
+        # Pull latest
           cd ~/tech-crush-1
           git checkout MONCLERO
           git pull
 
-          # Pull Docker Images and Restart services
+        # Pull Docker Images and Restart services
           sudo docker compose pull
           sudo docker compose up -d
