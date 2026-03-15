@@ -34,7 +34,7 @@ jobs:
       context: ./frontend
       push: true
       tags: | 
-         monclero/techcrush-frontend:v2
+         monclero/techcrush-frontend:v2.1
          monclero/techcrush-frontend:${{ github.sha }}
 
     #---
@@ -45,7 +45,7 @@ jobs:
       context: ./Backend
       push: true
       tags: | 
-         monclero/techcrush-backend:v2
+         monclero/techcrush-backend:v2.1
          monclero/techcrush-backend:${{ github.sha }}
 
     #---
@@ -54,8 +54,8 @@ jobs:
    - name: Summary
      run: |
          echo "### Docker Images Pushed" >> $GITHUB_STEP_SUMMARY
-         echo "- \`monclero/techcrush-backend:v1${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
-         echo "- \`monclero/techcrush-frontend:v1${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+         echo "- \`monclero/techcrush-backend:v2.1${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+         echo "- \`monclero/techcrush-frontend:v2.1${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
    
    #---
    # Step 8: Deploy on Azure VM via SSH
