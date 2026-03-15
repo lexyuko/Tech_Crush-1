@@ -67,8 +67,11 @@ jobs:
       user: ${{ secrets.VM_USER }}
       private_key: ${{ secrets.VM_SSH_KEY }}
       command: |
-        mkdir -p tech_crush_1
-        cd tech_crush_1
-        echo "Current directory: "
-        echo $PWD
+        mkdir -p tech_crush_1 &&
+        cd tech_crush_1 &&
+        echo "Current directory: " &&
+        echo $PWD &&
         pwd
+
+   - name: Notify Command Success
+     run: echo "Command executed on ${{ secrets.VM_HOST }} successfully!"
