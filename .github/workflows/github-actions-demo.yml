@@ -16,45 +16,46 @@ jobs:
    - name: Checkout repo
      uses: actions/checkout@v4
 
-  #  - name: Set up QEMU
-  #    uses: docker/setup-qemu-action@v2
+   #---
+   # Step 2: Login to Docker Hub
+   #---
+   - name: Login to Docker Hub
+     uses: docker/login-action@v2
+     with:
+      username: ${{ secrets.DOCKERHUB_USERNAME }}
+      password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-  #  - name: Set up Docker Buildx
-  #    uses: docker/setup-buildx-action@v2
+   #---
+   # Step 3: Build on Runner & Push Frontend Image to DockerHub
+   #---
+   - name: Build and Push Frontend
+     uses: docker/build-push-action@v4
+     with:
+      context: ./Frontend
+      push: true
+      tags: | 
+         monclero/techcrush-frontend:v1
+         monclero/techcrush-frontend:${{ github.sha }}
 
-  #  - name: Login to Docker Hub
-  #    uses: docker/login-action@v2
-  #    with:
-  #     username: ${{ secrets.DOCKERHUB_USERNAME }}
-  #     password: ${{ secrets.DOCKERHUB_PASSWORD }}
+    #---
+    # Step 4: Build on Runner & Push Backend Image To DockerHub
+   - name: Build and Push Backend
+     uses: docker/build-push-action@v4
+     with:
+      context: ./Backend
+      push: true
+      tags: | 
+         monclero/techcrush-backend:v1
+         monclero/techcrush-backend:${{ github.sha }}
 
-  #  - name: Build and push frontend
-  #    uses: docker/build-push-action@v4
-  #    with:
-  #     context: ./frontend 
-  #     push: true
-  #     tags: | 
-  #       monclero/techcrush-frontend:v1.0
-  #       monclero/techcrush-frontend:${{ github.sha }}
-
-  #  - name: Build and push backend
-  #    uses: docker/build-push-action@v4
-  #    with:
-  #     context: ./frontend 
-  #     push: true
-  #     tags: | 
-  #       monclero/techcrush-frontend:v1.0
-  #       monclero/techcrush-frontend:${{ github.sha }}
-
-
-  #  #---
-  #  # Step 7: Echo Images Pushed 
-  #  #---
-  #  - name: Summary
-  #    run: |
-  #       echo "### Docker Images Pushed" >> $GITHUB_STEP_SUMMARY
-  #       echo "- \`lexyuko/tech-crush-group-1-backend:${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
-  #       echo "- \`francesehinor/tech-crush-group-1-frontend:${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+    #---
+    # Step 7: Echo Images Pushed 
+    #---
+   - name: Summary
+     run: |
+         echo "### Docker Images Pushed" >> $GITHUB_STEP_SUMMARY
+         echo "- \`monclero/techcrush-backend:v1${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+         echo "- \`monclero/techcrush-frontend:v1${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
    
    #---
    # Step 8: Deploy on Azure VM via SSH
@@ -62,17 +63,15 @@ jobs:
    - name: Deploy on Azure VM
      uses: D3rHase/ssh-command-action@latest
      with:
-       host: ${{ vars.VM_HOST }}
-       user: ${{ vars.VM_USER }}
-       private_key: ${{ vars.VM_SSH_KEY }}
+       host: ${{ secrets.VM_HOST }}
+       user: ${{ secrets.VM_USER }}
+       private_key: ${{ secrets.VM_SSH_KEY }}
        command: |
-            mkdir -p docker-project
-            cd ~/docker-project || git clone "git clone link" docker-project
-            cd docker-project
-            git pull origin main
-            cd ~/
-            sudo docker compose down
-            sudo docker pull "backend link"
-            sudo docker pull "frontend link"
-            sudo docker compose up -d --build  
+          if [ ! -d ~/docker-project/.git ]; then
+            git clone git@github.com:lexyuko/Tech_Crush-1.git ~/docker-project
+          fi
+          cd ~/docker-project
+          git pull MONCLERO
+          sudo docker compose pull
+          sudo docker compose up -d
             
