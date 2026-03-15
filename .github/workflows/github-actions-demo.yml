@@ -73,10 +73,10 @@ jobs:
           fi
 
           # Pull latest
-          cd ~/docker-project
-          git pull MONCLERO
+          cd ~/tech-crush-1
+          git checkout MONCLERO
+          git pull
 
           # Pull Docker Images and Restart services
-          docker compose pull
-          docker compose up -d
-          
+          sudo docker compose pull
+          sudo docker compose up -d
