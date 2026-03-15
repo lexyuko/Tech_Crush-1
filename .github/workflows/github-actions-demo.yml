@@ -74,4 +74,3 @@ jobs:
         
    - name: Notify Command Success
      run: echo "Command executed on ${{ secrets.VM_HOST }} successfully!"
-     
