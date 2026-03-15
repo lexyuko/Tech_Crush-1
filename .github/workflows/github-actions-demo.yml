@@ -76,6 +76,6 @@ jobs:
           cd ~/docker-project
           git pull MONCLERO
 
-          #Pull Docker Images and Restart services
+          # Pull Docker Images and Restart services
           docker compose pull
           docker compose up -d  
