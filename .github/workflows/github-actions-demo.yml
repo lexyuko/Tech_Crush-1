@@ -70,6 +70,7 @@ jobs:
           if [ ! -d ~/docker-project/.git ]; then
             git clone git@github.com:lexyuko/Tech_Crush-1.git ~/docker-project
           fi
+
           cd ~/docker-project
           git pull MONCLERO
           sudo docker compose pull
