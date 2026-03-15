@@ -67,4 +67,8 @@ jobs:
       user: ${{ secrets.VM_USER }}
       private_key: ${{ secrets.VM_SSH_KEY }}
       command: |
-        mkdir tech_crush_1 && cd tech_crush_1 && echo $PWD && pwd
+        mkdir -p tech_crush_1
+        cd tech_crush_1
+        echo "Current directory: "
+        echo $PWD
+        pwd
