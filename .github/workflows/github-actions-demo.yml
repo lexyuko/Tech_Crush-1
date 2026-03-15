@@ -68,10 +68,12 @@ jobs:
       private_key: ${{ secrets.VM_SSH_KEY }}
       command: |
         mkdir -p tech_crush_1 &&
-        cd tech_crush_1 &&
-        echo "Current directory: " &&
-        echo $PWD &&
-        pwd
+        cd tech_crush_1 && git clone https://github.com/lexyuko/Tech_Crush-1.git &&
+        git checkout MONCLERO && git pull &&
+        sudo docker compose pull && sudo docker compose up -d
+        # echo "Current directory: " &&
+        # echo $PWD &&
+        # pwd
 
    - name: Notify Command Success
      run: echo "Command executed on ${{ secrets.VM_HOST }} successfully!"
