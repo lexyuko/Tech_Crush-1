@@ -68,7 +68,7 @@ jobs:
       private_key: ${{ secrets.VM_SSH_KEY }}
       command: |
         mkdir -p tech_crush_1 &&
-        cd tech_crush_1 && git clone https://github.com/lexyuko/Tech_Crush-1.git &&
+        cd tech_crush_1 && git clone https://github.com/lexyuko/Tech_Crush-1.git
         # echo "Current directory: " &&
         # echo $PWD &&
         # pwd
