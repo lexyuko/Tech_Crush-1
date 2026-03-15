@@ -34,7 +34,7 @@ jobs:
       context: ./frontend
       push: true
       tags: | 
-         monclero/techcrush-frontend:v1
+         monclero/techcrush-frontend:v2
          monclero/techcrush-frontend:${{ github.sha }}
 
     #---
@@ -45,7 +45,7 @@ jobs:
       context: ./Backend
       push: true
       tags: | 
-         monclero/techcrush-backend:v1
+         monclero/techcrush-backend:v2
          monclero/techcrush-backend:${{ github.sha }}
 
     #---
