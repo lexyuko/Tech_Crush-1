@@ -39,6 +39,7 @@ jobs:
 
     #---
     # Step 4: Build on Runner & Push Backend Image To DockerHub
+    #---
    - name: Build and Push Backend
      uses: docker/build-push-action@v4
      with:
@@ -49,7 +50,7 @@ jobs:
          monclero/techcrush-backend:${{ github.sha }}
 
     #---
-    # Step 7: Echo Images Pushed 
+    # Step 5: Echo Images Pushed 
     #---
    - name: Summary
      run: |
@@ -58,7 +59,7 @@ jobs:
          echo "- \`monclero/techcrush-frontend:v2.1${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
    
    #---
-   # Step 8: Deploy on Azure VM via SSH
+   # Step 6: Deploy on Azure VM via SSH
    #---
    - name: Deploy on Azure VM
      uses: D3rHase/ssh-command-action@latest
