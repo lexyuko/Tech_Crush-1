@@ -18,11 +18,10 @@ services:
     #   context: ./backend     # Path to your local frontend directory
     #   dockerfile: Dockerfile   # Optional, defaults to 'Dockerfile' in that folder
     # container_name: backend
+    env_file:
+      - .env
     ports:
       - "5000:5000"
-    environment:
-      - MONGODB_URI=mongodb://mongo:27017/techcrush
-      - JWT_SECRET=group1-techcrush.
     depends_on:
       - mongo
    
